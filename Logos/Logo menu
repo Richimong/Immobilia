@@ -1,0 +1,36 @@
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from io import BytesIO
+from PIL import Image
+
+def create_menu_icon(num_lines, filename):
+    fig, ax = plt.subplots(figsize=(2, 2), dpi=96)
+    ax.set_xlim(0, 48)
+    ax.set_ylim(0, 48)
+    ax.axis('off')
+    fig.patch.set_alpha(0)
+
+    circle = patches.Circle((24, 24), 23, fill=False, edgecolor="#EDE9DE", linewidth=2)
+    ax.add_patch(circle)
+
+    if num_lines == 3:
+        y_positions = [18, 24, 30]
+    elif num_lines == 2:
+        y_positions = [20, 28]
+    else:
+        y_positions = []
+
+    for y in y_positions:
+        ax.plot([14, 34], [y, y], color="#EDE9DE", linewidth=2, solid_capstyle='round')
+
+    buf = BytesIO()
+    plt.savefig(buf, format='png', transparent=True, bbox_inches='tight', pad_inches=0)
+    buf.seek(0)
+    img = Image.open(buf)
+    img.save(filename)
+    buf.close()
+    plt.close()
+
+# Generar los dos íconos
+create_menu_icon(3, "menu_icon_3_lines.svg")
+create_menu_icon(2, "menu_icon_2_lines.svg")
