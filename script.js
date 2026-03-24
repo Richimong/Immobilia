@@ -209,3 +209,38 @@ function inicializarSlider(imagenes) {
     
     initSlider();
 }
+
+// ========== DETECCIÓN DE DISPOSITIVO Y REDIRECCIÓN ==========
+function esDispositivoMovil() {
+    // Detectar si es móvil o tablet por User Agent
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(ua);
+}
+
+function manejarContacto(telefono, nombre) {
+    // Eliminar cualquier carácter no numérico
+    const telefonoLimpio = telefono.replace(/\D/g, '');
+    
+    if (esDispositivoMovil()) {
+        // En celular: abrir marcador telefónico
+        window.location.href = `tel:+${telefonoLimpio}`;
+    } else {
+        // En PC: abrir WhatsApp Web
+        const mensaje = encodeURIComponent(`Hola, me interesa la propiedad. Mi nombre es:`);
+        window.open(`https://web.whatsapp.com/send?phone=${telefonoLimpio}&text=${mensaje}`, '_blank');
+    }
+}
+
+// Asignar eventos a los botones de contacto
+document.addEventListener('DOMContentLoaded', function() {
+    const botonesContacto = document.querySelectorAll('.btn-telefono-horizontal');
+    
+    botonesContacto.forEach(boton => {
+        boton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const telefono = this.getAttribute('data-telefono');
+            const nombre = this.getAttribute('data-nombre');
+            manejarContacto(telefono, nombre);
+        });
+    });
+});
