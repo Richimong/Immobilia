@@ -6,7 +6,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Hace que el padding no afecte el ancho total */
+    box-sizing: border-box;
 }
 
 body {
@@ -20,9 +20,9 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    background: #1f2c3a; /* Color oscuro profesional */
+    background: #1f2c3a;
     color: white;
-    position: sticky; /* Fija el header al hacer scroll */
+    position: sticky;
     top: 0;
     z-index: 100;
     flex-wrap: wrap;
@@ -41,25 +41,29 @@ body {
 
 .nombre h1 {
     font-size: 50px;
+    margin: 0;
 }
 
-/* Botones de navegación */
 .menu {
     display: flex;
     gap: 15px;
 }
 
 .btn {
-    background: #caa45f; /* Color dorado/café */
+    background: #caa45f;
     color: white;
     padding: 10px 18px;
     text-decoration: none;
     border-radius: 5px;
     transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .btn:hover {
     background: #b88d4a;
+    color: white;
 }
 
 /* ---------- PÁGINA PRINCIPAL (BIENVENIDA) ---------- */
@@ -87,7 +91,6 @@ body {
     margin: 0 auto;
 }
 
-/* Cada tarjeta de propiedad */
 .card {
     background: white;
     border-radius: 10px;
@@ -96,17 +99,18 @@ body {
     color: black;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    display: block;
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Efecto flotante al pasar mouse */
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
     width: 100%;
     height: 220px;
-    object-fit: cover; /* Ajusta la imagen sin distorsionar */
+    object-fit: cover;
 }
 
 .descripcion {
@@ -115,7 +119,13 @@ body {
 
 .descripcion h3 {
     font-size: 20px;
+    margin-bottom: 8px;
     color: #1f2c3a;
+}
+
+.descripcion p {
+    color: #666;
+    font-size: 14px;
 }
 
 .precio {
@@ -126,12 +136,12 @@ body {
     margin-top: 8px;
 }
 
-/* Iconos de características en tarjetas */
+/* Info extra en cards */
 .info-extra {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 12px 15px 15px;
+    padding: 12px 15px 15px 15px;
     border-top: 1px solid #eee;
 }
 
@@ -141,6 +151,10 @@ body {
     gap: 5px;
     font-size: 13px;
     color: #666;
+}
+
+.icono {
+    font-size: 16px;
 }
 
 /* ---------- DETALLE DE PROPIEDAD (3 COLUMNAS) ---------- */
@@ -175,11 +189,14 @@ body {
     height: 400px;
     object-fit: cover;
     border-radius: 10px;
-    cursor: pointer; /* Indica que se puede hacer clic para ampliar */
+    cursor: pointer;
     transition: transform 0.3s;
 }
 
-/* Botones de navegación (flechas) */
+.slider img:hover {
+    transform: scale(1.02);
+}
+
 .flecha {
     position: absolute;
     top: 50%;
@@ -195,14 +212,24 @@ body {
     z-index: 10;
 }
 
-.izquierda { left: 10px; }
-.derecha { right: 10px; }
+.flecha:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
 
-/* Miniaturas (vista previa de imágenes) */
+.izquierda {
+    left: 10px;
+}
+
+.derecha {
+    right: 10px;
+}
+
+/* Miniaturas */
 .miniaturas {
     display: flex;
     gap: 10px;
-    overflow-x: auto; /* Scroll horizontal si hay muchas */
+    overflow-x: auto;
     padding: 10px 0;
     margin-bottom: 15px;
 }
@@ -218,12 +245,16 @@ body {
     flex-shrink: 0;
 }
 
-.miniatura.activa {
-    border-color: #caa45f; /* Resalta la imagen actual */
+.miniatura:hover {
     transform: scale(1.05);
 }
 
-/* Indicadores (puntos) */
+.miniatura.activa {
+    border-color: #caa45f;
+    transform: scale(1.05);
+}
+
+/* Indicadores (dots) */
 .slider-dots {
     display: flex;
     justify-content: center;
@@ -237,6 +268,11 @@ body {
     border-radius: 50%;
     background: #ccc;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot:hover {
+    background: #999;
 }
 
 .dot.activo {
@@ -252,22 +288,29 @@ body {
 .titulo-propiedad {
     font-size: 28px;
     color: #1f2c3a;
+    margin-bottom: 10px;
 }
 
 .precio-propiedad {
     font-size: 32px;
     font-weight: bold;
     color: #caa45f;
-    margin: 10px 0;
+    margin-bottom: 15px;
 }
 
 .ubicacion-propiedad {
     color: #666;
+    margin-bottom: 20px;
+    font-size: 16px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
-/* Grid de características (2 columnas) */
+.ubicacion-propiedad i {
+    color: #caa45f;
+    margin-right: 8px;
+}
+
 .grid-caracteristicas {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -282,16 +325,26 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 15px;
+    color: #333;
 }
 
 .grid-caracteristicas i {
     width: 25px;
     color: #caa45f;
+    font-size: 18px;
 }
 
 .descripcion-propiedad {
+    margin-top: 20px;
     line-height: 1.6;
     color: #555;
+}
+
+.descripcion-propiedad h3 {
+    color: #1f2c3a;
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 
 /* ---------- MAPA Y COMPARTIR ---------- */
@@ -310,12 +363,17 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.compartir-titulo {
+    font-weight: 600;
+    color: #1f2c3a;
+    font-size: 16px;
+}
+
 .redes-sociales {
     display: flex;
     gap: 12px;
 }
 
-/* Botones de redes sociales */
 .red-social {
     display: inline-flex;
     align-items: center;
@@ -325,18 +383,47 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
+    border: none;
 }
 
-.red-social.fb { background: #f0f2f5; color: #1877f2; }
-.red-social.fb:hover { background: #1877f2; color: white; }
+.red-social i {
+    font-size: 16px;
+}
 
-.red-social.wa { background: #f0f2f5; color: #25d366; }
-.red-social.wa:hover { background: #25d366; color: white; }
+.red-social.fb {
+    background: #f0f2f5;
+    color: #1877f2;
+}
 
-.red-social.copy { background: #f0f2f5; color: #6c757d; }
-.red-social.copy:hover { background: #6c757d; color: white; }
+.red-social.fb:hover {
+    background: #1877f2;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.red-social.wa {
+    background: #f0f2f5;
+    color: #25d366;
+}
+
+.red-social.wa:hover {
+    background: #25d366;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.red-social.copy {
+    background: #f0f2f5;
+    color: #6c757d;
+}
+
+.red-social.copy:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+}
 
 .mapa iframe {
     width: 100%;
@@ -352,8 +439,17 @@ body {
     border-top: 1px solid #eee;
 }
 
+.contacto-telefonos h3 {
+    font-size: 16px;
+    color: #1f2c3a;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
 .telefonos-container-horizontal {
     display: flex;
+    flex-direction: row;
     gap: 15px;
     justify-content: space-between;
 }
@@ -367,9 +463,10 @@ body {
     padding: 12px 16px;
     border-radius: 10px;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     background: #1f2c3a;
     color: white;
+    border: none;
     cursor: pointer;
 }
 
@@ -378,35 +475,55 @@ body {
     color: #1f2c3a;
     border-radius: 50%;
     padding: 8px;
+    font-size: 18px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-telefono-horizontal:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     background: #0f1a24;
 }
 
 .telefono-info {
     display: flex;
     flex-direction: column;
+    text-align: left;
+}
+
+.telefono-nombre {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.telefono-numero {
+    font-size: 12px;
+    opacity: 0.9;
 }
 
 /* ---------- MODAL (IMAGEN AMPLIADA) ---------- */
 .modal {
     display: none;
     position: fixed;
-    top: 0;
+    z-index: 1000;
     left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.95);
+    animation: fadeIn 0.3s;
 }
 
 .modal-content {
     position: relative;
+    margin: auto;
+    padding: 20px;
     width: 90%;
     height: 90%;
-    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -424,12 +541,20 @@ body {
     right: 40px;
     color: white;
     font-size: 40px;
+    font-weight: bold;
     cursor: pointer;
+    z-index: 1001;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #caa45f;
 }
 
 .modal-btn {
     position: absolute;
     top: 50%;
+    transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.7);
     color: white;
     border: none;
@@ -437,72 +562,197 @@ body {
     font-size: 24px;
     cursor: pointer;
     border-radius: 50%;
+    transition: all 0.3s;
 }
 
-.modal-prev { left: 20px; }
-.modal-next { right: 20px; }
+.modal-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
 
-/* ---------- RESPONSIVE (MÓVILES Y TABLETS) ---------- */
-/* Pantallas menores a 1024px (tablets) */
+.modal-prev {
+    left: 20px;
+}
+
+.modal-next {
+    right: 20px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========== RESPONSIVE ========== */
+/* Tablets (menos de 1024px) */
 @media (max-width: 1024px) {
     .contenedor-detalle {
         grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 30px;
     }
+    
     .grid-propiedades {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px;
     }
 }
 
-/* Pantallas menores a 768px (móviles) */
+/* Móviles (menos de 768px) */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
         text-align: center;
+        gap: 10px;
     }
     
-    /* IMPORTANTE: Reordenar columnas en móvil */
+    .menu {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .logo img {
+        height: 60px;
+    }
+    
+    .nombre h1 {
+        font-size: 28px;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    /* ===== REORDENAR COLUMNAS EN DETALLE DE PROPIEDAD ===== */
+    /* Esto hace que en móvil se vea vertical:
+       Imágenes → Características → Mapa */
     .contenedor-detalle {
-        display: flex;
-        flex-direction: column;
+        display: flex !important;
+        flex-direction: column !important;
         gap: 20px;
         padding: 15px;
     }
     
-    /* Orden específico: Imágenes → Características → Mapa */
-    .contenedor-detalle .imagenes { order: 1; }
-    .contenedor-detalle .caracteristicas { order: 2; }
-    .contenedor-detalle .mapa { order: 3; }
-    
-    .grid-propiedades {
-        grid-template-columns: 1fr;
+    .contenedor-detalle .imagenes {
+        order: 1;
     }
     
+    .contenedor-detalle .caracteristicas {
+        order: 2;
+    }
+    
+    .contenedor-detalle .mapa {
+        order: 3;
+    }
+    /* ===================================================== */
+    
+    /* Tarjetas de propiedades en 1 columna */
+    .grid-propiedades {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    /* Ajustes del slider */
     .slider img {
         height: 280px;
     }
     
-    /* Botones de contacto se apilan verticalmente */
+    .miniatura {
+        width: 65px;
+        height: 50px;
+    }
+    
+    .flecha {
+        padding: 8px 12px;
+        font-size: 18px;
+    }
+    
+    /* Grid de características en móvil */
+    .grid-caracteristicas {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 15px;
+    }
+    
+    /* Títulos más compactos */
+    .titulo-propiedad {
+        font-size: 22px;
+    }
+    
+    .precio-propiedad {
+        font-size: 24px;
+    }
+    
+    /* Botones de compartir */
+    .compartir {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .red-social {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    /* Botones de teléfono en vertical */
     .telefonos-container-horizontal {
         flex-direction: column;
         gap: 10px;
     }
     
-    .grid-caracteristicas {
-        grid-template-columns: repeat(2, 1fr);
+    .btn-telefono-horizontal {
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    /* Mapa más compacto */
+    .mapa iframe {
+        height: 250px;
+    }
+    
+    /* Padding general */
+    .caracteristicas, .mapa {
+        padding: 15px;
     }
 }
 
 /* Pantallas muy pequeñas (menos de 480px) */
 @media (max-width: 480px) {
-    .grid-caracteristicas {
-        grid-template-columns: 1fr;
-    }
-    
     .slider img {
         height: 220px;
     }
     
+    .grid-caracteristicas {
+        grid-template-columns: 1fr;
+    }
+    
+    .miniatura {
+        width: 55px;
+        height: 45px;
+    }
+    
     .red-social span {
-        display: none; /* Oculta texto, solo ícono */
+        display: none;
+    }
+    
+    .red-social {
+        padding: 8px 12px;
+    }
+    
+    .red-social i {
+        font-size: 16px;
+    }
+    
+    .telefono-nombre {
+        font-size: 12px;
+    }
+    
+    .telefono-numero {
+        font-size: 10px;
     }
 }
