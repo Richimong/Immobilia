@@ -1,6 +1,10 @@
+/* ============================================ */
+/* INMOBILIA - FUNCIONES PRINCIPALES            */
+/* ============================================ */
+
 console.log("Sitio Immobilia cargado correctamente");
 
-// ========== FUNCIONES DE COMPARTIR ==========
+/* ---------- COMPARTIR EN REDES SOCIALES ---------- */
 function compartirFacebook() {
     const url = window.location.href;
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
@@ -20,6 +24,7 @@ function copiarLink() {
     });
 }
 
+/* Notificación flotante temporal */
 function mostrarNotificacion(mensaje) {
     const notificacion = document.createElement('div');
     notificacion.textContent = mensaje;
@@ -37,12 +42,12 @@ function mostrarNotificacion(mensaje) {
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     `;
     document.body.appendChild(notificacion);
-    setTimeout(() => {
-        notificacion.remove();
-    }, 3000);
+    setTimeout(() => notificacion.remove(), 3000);
 }
 
-// ========== FUNCIONES DEL SLIDER ==========
+/* ---------- SLIDER DE IMÁGENES ---------- */
+/* Esta función se llama desde cada página de propiedad,
+   recibe un array con las rutas de las imágenes */
 function inicializarSlider(imagenes) {
     const imagenActiva = document.getElementById("imagen-activa");
     if (!imagenActiva || imagenes.length === 0) return;
@@ -52,21 +57,21 @@ function inicializarSlider(imagenes) {
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     
-    // Elementos del modal
+    // Elementos del modal (imagen ampliada)
     const modal = document.getElementById("imageModal");
     const modalImage = document.getElementById("modalImage");
     const closeModal = document.querySelector(".close-modal");
     const modalPrev = document.querySelector(".modal-prev");
     const modalNext = document.querySelector(".modal-next");
     
-    // Contenedores para miniaturas y dots
+    // Contenedores para miniaturas y puntos indicadores
     const thumbnailsContainer = document.getElementById("thumbnailsContainer");
     const sliderDots = document.getElementById("sliderDots");
     
     // Establecer la primera imagen
     img.src = imagenes[0];
     
-    // Función para actualizar la imagen principal
+    /* Actualiza la imagen principal y los elementos activos */
     function actualizarImagen(index) {
         indiceActual = (index + imagenes.length) % imagenes.length;
         img.src = imagenes[indiceActual];
@@ -74,7 +79,7 @@ function inicializarSlider(imagenes) {
         actualizarDotsActivos();
     }
     
-    // Función para crear miniaturas
+    /* Crea las miniaturas desde el array de imágenes */
     function crearMiniaturas() {
         if (!thumbnailsContainer) return;
         thumbnailsContainer.innerHTML = '';
@@ -89,19 +94,13 @@ function inicializarSlider(imagenes) {
         });
     }
     
-    // Función para actualizar miniatura activa
     function actualizarMiniaturasActivas() {
-        const miniaturas = document.querySelectorAll('.miniatura');
-        miniaturas.forEach((miniatura, index) => {
-            if (index === indiceActual) {
-                miniatura.classList.add('activa');
-            } else {
-                miniatura.classList.remove('activa');
-            }
+        document.querySelectorAll('.miniatura').forEach((miniatura, index) => {
+            index === indiceActual ? miniatura.classList.add('activa') : miniatura.classList.remove('activa');
         });
     }
     
-    // Función para crear dots (indicadores)
+    /* Crea los puntos indicadores (dots) */
     function crearDots() {
         if (!sliderDots) return;
         sliderDots.innerHTML = '';
@@ -114,40 +113,32 @@ function inicializarSlider(imagenes) {
         });
     }
     
-    // Función para actualizar dots activos
     function actualizarDotsActivos() {
-        const dots = document.querySelectorAll('.dot');
-        dots.forEach((dot, index) => {
-            if (index === indiceActual) {
-                dot.classList.add('activo');
-            } else {
-                dot.classList.remove('activo');
-            }
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            index === indiceActual ? dot.classList.add('activo') : dot.classList.remove('activo');
         });
     }
     
-    // Función para imagen anterior
+    /* Navegación con flechas */
     function imagenAnterior() {
         indiceActual = (indiceActual - 1 + imagenes.length) % imagenes.length;
         actualizarImagen(indiceActual);
     }
     
-    // Función para siguiente imagen
     function imagenSiguiente() {
         indiceActual = (indiceActual + 1) % imagenes.length;
         actualizarImagen(indiceActual);
     }
     
-    // ========== FUNCIONES DEL MODAL ==========
+    /* ---------- MODAL (IMAGEN AMPLIADA) ---------- */
     function abrirModal() {
         if (!modal) return;
         modal.style.display = 'block';
         modalImage.src = imagenes[indiceActual];
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Evita scroll detrás del modal
     }
     
     function cerrarModal() {
-        if (!modal) return;
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
@@ -164,7 +155,7 @@ function inicializarSlider(imagenes) {
         actualizarImagen(indiceActual);
     }
     
-    // ========== EVENT LISTENERS ==========
+    /* ---------- EVENTOS ---------- */
     if (prevBtn) prevBtn.addEventListener('click', imagenAnterior);
     if (nextBtn) nextBtn.addEventListener('click', imagenSiguiente);
     if (img) img.addEventListener('click', abrirModal);
@@ -172,69 +163,59 @@ function inicializarSlider(imagenes) {
     if (modalPrev) modalPrev.addEventListener('click', modalImagenAnterior);
     if (modalNext) modalNext.addEventListener('click', modalImagenSiguiente);
     
-    // Cerrar modal al hacer click fuera de la imagen
+    // Cerrar modal al hacer clic fuera de la imagen
     if (modal) {
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                cerrarModal();
-            }
+            if (e.target === modal) cerrarModal();
         });
     }
     
-    // Navegación con teclado
+    /* Navegación con teclado (flechas y ESC) */
     document.addEventListener('keydown', (e) => {
         if (modal && modal.style.display === 'block') {
-            if (e.key === 'ArrowLeft') {
-                modalImagenAnterior();
-            } else if (e.key === 'ArrowRight') {
-                modalImagenSiguiente();
-            } else if (e.key === 'Escape') {
-                cerrarModal();
-            }
+            if (e.key === 'ArrowLeft') modalImagenAnterior();
+            else if (e.key === 'ArrowRight') modalImagenSiguiente();
+            else if (e.key === 'Escape') cerrarModal();
         } else {
-            if (e.key === 'ArrowLeft') {
-                imagenAnterior();
-            } else if (e.key === 'ArrowRight') {
-                imagenSiguiente();
-            }
+            if (e.key === 'ArrowLeft') imagenAnterior();
+            else if (e.key === 'ArrowRight') imagenSiguiente();
         }
     });
     
-    // Inicializar slider
-    function initSlider() {
-        crearMiniaturas();
-        crearDots();
-        actualizarImagen(0);
-    }
-    
-    initSlider();
+    /* Inicializar todo */
+    crearMiniaturas();
+    crearDots();
+    actualizarImagen(0);
 }
 
-// ========== DETECCIÓN DE DISPOSITIVO Y REDIRECCIÓN ==========
+/* ---------- BOTONES DE CONTACTO (LLAMADA/WHATSAPP) ---------- */
+/* Detecta si es móvil por tamaño de pantalla o User Agent */
 function esDispositivoMovil() {
-    // Detectar si es móvil o tablet por User Agent
+    const esPantallaPequena = window.matchMedia("(max-width: 768px)").matches;
     const ua = navigator.userAgent || navigator.vendor || window.opera;
-    return /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(ua);
+    const esMovilUA = /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(ua);
+    return esPantallaPequena || esMovilUA;
 }
 
+/* Redirige según dispositivo:
+   - Móvil: abre WhatsApp (app)
+   - PC: abre WhatsApp Web */
 function manejarContacto(telefono, nombre) {
-    // Eliminar cualquier carácter no numérico
     const telefonoLimpio = telefono.replace(/\D/g, '');
+    const mensaje = encodeURIComponent(`Hola, me interesa la propiedad en Immobilia. Mi nombre es:`);
     
     if (esDispositivoMovil()) {
-        // En celular: abrir marcador telefónico
-        window.location.href = `tel:+${telefonoLimpio}`;
+        // En móvil: abre la app de WhatsApp
+        window.location.href = `https://wa.me/${telefonoLimpio}?text=${mensaje}`;
     } else {
-        // En PC: abrir WhatsApp Web
-        const mensaje = encodeURIComponent(`Hola, me interesa la propiedad. Mi nombre es:`);
+        // En PC: abre WhatsApp Web en nueva pestaña
         window.open(`https://web.whatsapp.com/send?phone=${telefonoLimpio}&text=${mensaje}`, '_blank');
     }
 }
 
-// Asignar eventos a los botones de contacto
+/* Asignar evento a los botones de contacto al cargar la página */
 document.addEventListener('DOMContentLoaded', function() {
     const botonesContacto = document.querySelectorAll('.btn-telefono-horizontal');
-    
     botonesContacto.forEach(boton => {
         boton.addEventListener('click', function(e) {
             e.preventDefault();

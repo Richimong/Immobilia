@@ -1,25 +1,28 @@
-/* ========== ESTILOS GENERALES ========== */
+/* ============================================ */
+/* INMOBILIA - ESTILOS PRINCIPALES              */
+/* ============================================ */
+
+/* ---------- RESET Y ESTILOS BASE ---------- */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Hace que el padding no afecte el ancho total */
 }
 
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
     background: #f5f5f5;
 }
 
-/* ========== HEADER ========== */
+/* ---------- HEADER (BARRA SUPERIOR) ---------- */
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    background: #1f2c3a;
+    background: #1f2c3a; /* Color oscuro profesional */
     color: white;
-    position: sticky;
+    position: sticky; /* Fija el header al hacer scroll */
     top: 0;
     z-index: 100;
     flex-wrap: wrap;
@@ -38,32 +41,28 @@ body {
 
 .nombre h1 {
     font-size: 50px;
-    margin: 0;
 }
 
+/* Botones de navegación */
 .menu {
     display: flex;
     gap: 15px;
 }
 
 .btn {
-    background: #caa45f;
+    background: #caa45f; /* Color dorado/café */
     color: white;
     padding: 10px 18px;
     text-decoration: none;
     border-radius: 5px;
     transition: background 0.3s;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
 }
 
 .btn:hover {
     background: #b88d4a;
-    color: white;
 }
 
-/* ========== PÁGINA PRINCIPAL ========== */
+/* ---------- PÁGINA PRINCIPAL (BIENVENIDA) ---------- */
 .bienvenida {
     text-align: center;
     padding: 60px 20px;
@@ -78,7 +77,7 @@ body {
     line-height: 1.6;
 }
 
-/* ========== GRID PROPIEDADES (VENTA Y RENTA) ========== */
+/* ---------- GRID DE TARJETAS (VENTA/RENTA) ---------- */
 .grid-propiedades {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -88,6 +87,7 @@ body {
     margin: 0 auto;
 }
 
+/* Cada tarjeta de propiedad */
 .card {
     background: white;
     border-radius: 10px;
@@ -96,18 +96,17 @@ body {
     color: black;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    display: block;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Efecto flotante al pasar mouse */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    object-fit: cover; /* Ajusta la imagen sin distorsionar */
 }
 
 .descripcion {
@@ -116,13 +115,7 @@ body {
 
 .descripcion h3 {
     font-size: 20px;
-    margin-bottom: 8px;
     color: #1f2c3a;
-}
-
-.descripcion p {
-    color: #666;
-    font-size: 14px;
 }
 
 .precio {
@@ -133,12 +126,12 @@ body {
     margin-top: 8px;
 }
 
-/* Info extra en cards */
+/* Iconos de características en tarjetas */
 .info-extra {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 12px 15px 15px 15px;
+    padding: 12px 15px 15px;
     border-top: 1px solid #eee;
 }
 
@@ -150,11 +143,7 @@ body {
     color: #666;
 }
 
-.icono {
-    font-size: 16px;
-}
-
-/* ========== DETALLE DE PROPIEDAD ========== */
+/* ---------- DETALLE DE PROPIEDAD (3 COLUMNAS) ---------- */
 .contenedor-detalle {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -170,7 +159,7 @@ body {
     overflow: hidden;
 }
 
-/* Slider de imágenes */
+/* ---------- SLIDER DE IMÁGENES ---------- */
 .slider-container {
     position: relative;
     padding: 20px;
@@ -186,14 +175,11 @@ body {
     height: 400px;
     object-fit: cover;
     border-radius: 10px;
-    cursor: pointer;
+    cursor: pointer; /* Indica que se puede hacer clic para ampliar */
     transition: transform 0.3s;
 }
 
-.slider img:hover {
-    transform: scale(1.02);
-}
-
+/* Botones de navegación (flechas) */
 .flecha {
     position: absolute;
     top: 50%;
@@ -209,24 +195,14 @@ body {
     z-index: 10;
 }
 
-.flecha:hover {
-    background: rgba(0, 0, 0, 0.9);
-    transform: translateY(-50%) scale(1.1);
-}
+.izquierda { left: 10px; }
+.derecha { right: 10px; }
 
-.izquierda {
-    left: 10px;
-}
-
-.derecha {
-    right: 10px;
-}
-
-/* Miniaturas */
+/* Miniaturas (vista previa de imágenes) */
 .miniaturas {
     display: flex;
     gap: 10px;
-    overflow-x: auto;
+    overflow-x: auto; /* Scroll horizontal si hay muchas */
     padding: 10px 0;
     margin-bottom: 15px;
 }
@@ -242,16 +218,12 @@ body {
     flex-shrink: 0;
 }
 
-.miniatura:hover {
-    transform: scale(1.05);
-}
-
 .miniatura.activa {
-    border-color: #caa45f;
+    border-color: #caa45f; /* Resalta la imagen actual */
     transform: scale(1.05);
 }
 
-/* Indicadores (dots) */
+/* Indicadores (puntos) */
 .slider-dots {
     display: flex;
     justify-content: center;
@@ -265,11 +237,6 @@ body {
     border-radius: 50%;
     background: #ccc;
     cursor: pointer;
-    transition: all 0.3s;
-}
-
-.dot:hover {
-    background: #999;
 }
 
 .dot.activo {
@@ -277,7 +244,7 @@ body {
     transform: scale(1.2);
 }
 
-/* Características de la propiedad */
+/* ---------- INFORMACIÓN DE LA PROPIEDAD ---------- */
 .caracteristicas {
     padding: 20px;
 }
@@ -285,29 +252,22 @@ body {
 .titulo-propiedad {
     font-size: 28px;
     color: #1f2c3a;
-    margin-bottom: 10px;
 }
 
 .precio-propiedad {
     font-size: 32px;
     font-weight: bold;
     color: #caa45f;
-    margin-bottom: 15px;
+    margin: 10px 0;
 }
 
 .ubicacion-propiedad {
     color: #666;
-    margin-bottom: 20px;
-    font-size: 16px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
-.ubicacion-propiedad i {
-    color: #caa45f;
-    margin-right: 8px;
-}
-
+/* Grid de características (2 columnas) */
 .grid-caracteristicas {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -322,29 +282,19 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 15px;
-    color: #333;
 }
 
 .grid-caracteristicas i {
     width: 25px;
     color: #caa45f;
-    font-size: 18px;
 }
 
 .descripcion-propiedad {
-    margin-top: 20px;
     line-height: 1.6;
     color: #555;
 }
 
-.descripcion-propiedad h3 {
-    color: #1f2c3a;
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
-/* Mapa y compartir */
+/* ---------- MAPA Y COMPARTIR ---------- */
 .mapa {
     padding: 20px;
 }
@@ -352,31 +302,41 @@ body {
 .compartir {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
     margin-bottom: 20px;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #eee;
 }
 
-.compartir span {
-    font-weight: bold;
-    color: #333;
+.redes-sociales {
+    display: flex;
+    gap: 12px;
 }
 
-.share-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 50%;
+/* Botones de redes sociales */
+.red-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
     cursor: pointer;
-    font-size: 18px;
-    transition: transform 0.3s;
-    background: #f0f0f0;
 }
 
-.share-btn:hover {
-    transform: scale(1.1);
-}
+.red-social.fb { background: #f0f2f5; color: #1877f2; }
+.red-social.fb:hover { background: #1877f2; color: white; }
+
+.red-social.wa { background: #f0f2f5; color: #25d366; }
+.red-social.wa:hover { background: #25d366; color: white; }
+
+.red-social.copy { background: #f0f2f5; color: #6c757d; }
+.red-social.copy:hover { background: #6c757d; color: white; }
 
 .mapa iframe {
     width: 100%;
@@ -385,25 +345,68 @@ body {
     border: 0;
 }
 
-/* Modal para imágenes ampliadas */
+/* ---------- BOTONES DE CONTACTO TELEFÓNICO ---------- */
+.contacto-telefonos {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.telefonos-container-horizontal {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.btn-telefono-horizontal {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s;
+    background: #1f2c3a;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-telefono-horizontal i {
+    background: white;
+    color: #1f2c3a;
+    border-radius: 50%;
+    padding: 8px;
+}
+
+.btn-telefono-horizontal:hover {
+    transform: translateY(-2px);
+    background: #0f1a24;
+}
+
+.telefono-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- MODAL (IMAGEN AMPLIADA) ---------- */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    animation: fadeIn 0.3s;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
 }
 
 .modal-content {
     position: relative;
-    margin: auto;
-    padding: 20px;
     width: 90%;
     height: 90%;
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -421,20 +424,12 @@ body {
     right: 40px;
     color: white;
     font-size: 40px;
-    font-weight: bold;
     cursor: pointer;
-    z-index: 1001;
-    transition: color 0.3s;
-}
-
-.close-modal:hover {
-    color: #caa45f;
 }
 
 .modal-btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.7);
     color: white;
     border: none;
@@ -442,367 +437,72 @@ body {
     font-size: 24px;
     cursor: pointer;
     border-radius: 50%;
-    transition: all 0.3s;
 }
 
-.modal-btn:hover {
-    background: rgba(0, 0, 0, 0.9);
-    transform: translateY(-50%) scale(1.1);
-}
+.modal-prev { left: 20px; }
+.modal-next { right: 20px; }
 
-.modal-prev {
-    left: 20px;
-}
-
-.modal-next {
-    right: 20px;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* ========== RESPONSIVE ========== */
+/* ---------- RESPONSIVE (MÓVILES Y TABLETS) ---------- */
+/* Pantallas menores a 1024px (tablets) */
 @media (max-width: 1024px) {
     .contenedor-detalle {
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        padding: 30px;
     }
-    
     .grid-propiedades {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 30px;
     }
 }
 
+/* Pantallas menores a 768px (móviles) */
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
         text-align: center;
     }
     
-    .menu {
-        justify-content: center;
-        flex-wrap: wrap;
+    /* IMPORTANTE: Reordenar columnas en móvil */
+    .contenedor-detalle {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
     }
     
-    .contenedor-detalle {
-        grid-template-columns: 1fr;
-        padding: 20px;
-    }
+    /* Orden específico: Imágenes → Características → Mapa */
+    .contenedor-detalle .imagenes { order: 1; }
+    .contenedor-detalle .caracteristicas { order: 2; }
+    .contenedor-detalle .mapa { order: 3; }
     
     .grid-propiedades {
         grid-template-columns: 1fr;
-        padding: 20px;
     }
     
     .slider img {
-        height: 300px;
+        height: 280px;
     }
     
-    .miniatura {
-        width: 70px;
-        height: 50px;
-    }
-    
-    .grid-caracteristicas {
-        grid-template-columns: 1fr;
-    }
-    
-    .btn {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    .logo img {
-        height: 60px;
-    }
-    
-    .nombre h1 {
-        font-size: 22px;
-    }
-    
-    .titulo-propiedad {
-        font-size: 24px;
-    }
-    
-    .precio-propiedad {
-        font-size: 26px;
-    }
-}
-
-@media (max-width: 480px) {
-    .slider img {
-        height: 250px;
-    }
-    
-    .flecha {
-        padding: 8px 12px;
-        font-size: 18px;
-    }
-    
-    .miniatura {
-        width: 60px;
-        height: 45px;
-    }
-    
-    .precio-propiedad {
-        font-size: 22px;
-    }
-    
-    .titulo-propiedad {
-        font-size: 20px;
-    }
-    
-    .grid-caracteristicas div {
-        font-size: 13px;
-    }
-}
-
-.compartir {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.compartir-titulo {
-    font-weight: 600;
-    color: #1f2c3a;
-    font-size: 16px;
-}
-
-.redes-sociales {
-    display: flex;
-    gap: 12px;
-}
-
-.red-social {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: none;
-}
-
-.red-social i {
-    font-size: 16px;
-}
-
-/* Facebook */
-.red-social.fb {
-    background: #f0f2f5;
-    color: #1877f2;
-}
-
-.red-social.fb:hover {
-    background: #1877f2;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
-}
-
-/* WhatsApp */
-.red-social.wa {
-    background: #f0f2f5;
-    color: #25d366;
-}
-
-.red-social.wa:hover {
-    background: #25d366;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-}
-
-/* Copiar */
-.red-social.copy {
-    background: #f0f2f5;
-    color: #6c757d;
-}
-
-.red-social.copy:hover {
-    background: #6c757d;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-}
-
-/* Responsive para móviles */
-@media (max-width: 480px) {
-    .compartir {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .red-social {
-        padding: 6px 14px;
-        font-size: 13px;
-    }
-    
-    .red-social span {
-        display: inline; /* En móvil sí mostrar el texto */
-    }
-}
-
-@media (max-width: 380px) {
-    .red-social span {
-        display: none; /* En pantallas muy pequeñas ocultar texto */
-    }
-    
-    .red-social {
-        padding: 8px 12px;
-    }
-    
-    .red-social i {
-        font-size: 18px;
-    }
-}
-
-/* Tooltip para indicar comportamiento */
-.btn-telefono-horizontal {
-    position: relative;
-}
-
-.btn-telefono-horizontal:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    white-space: nowrap;
-    margin-bottom: 8px;
-    pointer-events: none;
-    z-index: 100;
-}
-
-/* Tooltip para móvil */
-@media (max-width: 768px) {
-    .btn-telefono-horizontal:hover::after {
-        content: "📱 Llamada directa";
-    }
-}
-
-/* Tooltip para PC */
-@media (min-width: 769px) {
-    .btn-telefono-horizontal:hover::after {
-        content: "💬 Abrir WhatsApp Web";
-    }
-}
-
-/* ========== BOTONES DE CONTACTO TELEFÓNICO HORIZONTALES ========== */
-.contacto-telefonos {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-}
-
-.contacto-telefonos h3 {
-    font-size: 16px;
-    color: #1f2c3a;
-    margin-bottom: 15px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.telefonos-container-horizontal {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    justify-content: space-between;
-}
-
-.btn-telefono-horizontal {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    background: #1f2c3a;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-telefono-horizontal i {
-    background: white;
-    color: #1f2c3a;
-    border-radius: 50%;
-    padding: 8px;
-    font-size: 18px;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-telefono-horizontal:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    background: #0f1a24;
-}
-
-.telefono-info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.telefono-nombre {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.telefono-numero {
-    font-size: 12px;
-    opacity: 0.9;
-}
-
-/* Versión con colores diferentes (opcional) */
-.btn-telefono-horizontal.whatsapp {
-    background: #25d366;
-}
-
-.btn-telefono-horizontal.whatsapp:hover {
-    background: #20b859;
-}
-
-/* Responsive para móviles */
-@media (max-width: 600px) {
+    /* Botones de contacto se apilan verticalmente */
     .telefonos-container-horizontal {
         flex-direction: column;
         gap: 10px;
     }
     
-    .btn-telefono-horizontal {
-        justify-content: center;
+    .grid-caracteristicas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Pantallas muy pequeñas (menos de 480px) */
+@media (max-width: 480px) {
+    .grid-caracteristicas {
+        grid-template-columns: 1fr;
+    }
+    
+    .slider img {
+        height: 220px;
+    }
+    
+    .red-social span {
+        display: none; /* Oculta texto, solo ícono */
     }
 }
