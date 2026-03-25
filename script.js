@@ -202,13 +202,27 @@ function esDispositivoMovil() {
    - PC: abre WhatsApp Web */
 function manejarContacto(telefono, nombre) {
     const telefonoLimpio = telefono.replace(/\D/g, '');
-    const mensaje = encodeURIComponent(`Hola, me interesa la propiedad en Immobilia. Mi nombre es:`);
+    
+    // ===== OBTENER EL TÍTULO DE LA PROPIEDAD DESDE EL HTML =====
+    // Busca el elemento con clase "titulo-propiedad"
+    const tituloElemento = document.querySelector('.titulo-propiedad');
+    let nombrePropiedad = '';
+    
+    if (tituloElemento) {
+        // Si existe el elemento, toma su texto
+        nombrePropiedad = tituloElemento.textContent.trim();
+    } else {
+        // Si no, usa el nombre del archivo como respaldo
+        const rutaCompleta = window.location.pathname;
+        nombrePropiedad = rutaCompleta.substring(rutaCompleta.lastIndexOf('/') + 1).replace('.html', '');
+    }
+    // ===========================================================
+    
+    const mensaje = encodeURIComponent(`Hola, me interesa la propiedad "${nombrePropiedad}" en Immobilia. Mi nombre es:`);
     
     if (esDispositivoMovil()) {
-        // En móvil: abre la app de WhatsApp
         window.location.href = `https://wa.me/${telefonoLimpio}?text=${mensaje}`;
     } else {
-        // En PC: abre WhatsApp Web en nueva pestaña
         window.open(`https://web.whatsapp.com/send?phone=${telefonoLimpio}&text=${mensaje}`, '_blank');
     }
 }
