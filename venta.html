@@ -1,88 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Propiedades en Venta - Immobilia</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Propiedades en Venta - Immobilia</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="Logos/Marca de Agua 3.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Logos/Marca de Agua 3.png">
-    <link rel="shortcut icon" href="Logos/Marca de Agua 3.png">
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="Logos/Marca de Agua 3.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="Logos/Marca de Agua 3.png">
+        <link rel="shortcut icon" href="Logos/Marca de Agua 3.png">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
 
-<body>
-
-    <header class="header">
-        <div class="logo">
-            <a href="index.html">
-                <img src="Logos/Marca de Agua 3.png" alt="Logo">
-            </a>
-        </div>
-        <div class="nombre">
-            <h1>Immobilia</h1>
-        </div>
-        <nav class="menu">
-            <a href="venta.html" class="btn">Compra</a>
-            <a href="renta.html" class="btn">Renta</a>
-            <a href="contacto.html" class="btn">Contacto</a>
-        </nav>
-    </header>
-
-    <section class="grid-propiedades">
-        <!-- PROPIEDAD 1: BODEGA EN REMATE -->
-        <a href="V011410.html" class="card">
-            <img src="Terreno Comercial San Mateo Atenco/watermarked San Mateo 2.jpg" alt="Bodega en Remate">
-            <div class="descripcion">
-                <h3>Bodega (Remate)</h3>
-                <h3>San Mateo Atenco</h3>
-                <span class="precio">$8,500,000</span>
+    <body>
+        <header class="header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="Logos/Marca de Agua 3.png" alt="Logo">
+                </a>
             </div>
-            <div class="info-extra">
-                <div class="item"><span class="icono">📐</span><span>1,114 m²</span></div>
-                <div class="item"><span class="icono">🏗️</span><span>214 m²</span></div>
-                <div class="item"><span class="icono">🛏️</span><span>3</span></div>
-                <div class="item"><span class="icono">🚿</span><span>3</span></div>
-                <div class="item"><span class="icono">🚗</span><span>1</span></div>
-                <div class="item"><span class="icono">🏢</span><span>2</span></div>
+            <div class="nombre">
+                <h1>Immobilia</h1>
+            </div>
+            <nav class="menu">
+                <a href="venta.html" class="btn">Compra</a>
+                <a href="renta.html" class="btn">Renta</a>
+                <a href="contacto.html" class="btn">Contacto</a>
+            </nav>
+        </header>
+
+        <!-- ========== FILTROS ========== -->
+        <div class="filtros-container">
+            <div class="filtros-header">
+                <h3>Filtrar propiedades</h3>
+                <button id="btn-limpiar" class="btn-limpiar">Limpiar filtros</button>
+            </div>
+            <div class="filtros-grid">
                 
-            </div>
-        </a>
+                <!-- Tipo de Propiedad (orden alfabético) -->
+                <div class="filtro-group">
+                    <label>Tipo de Propiedad</label>
+                    <select id="tipo-propiedad">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
 
-        <!-- PROPIEDAD 2: Casa Maru -->
-        <a href="V180126.html" class="card">
-            <img src="Maru/Casa/wa 20260301_132506.jpg" alt="Casa Moderna">
-            <div class="descripcion">
-                <h3>Casa 2 pisos</h3>
-                <h3>San Felipe Tlalmimilolpan</h3>
-                <span class="precio">$1,600,000</span>
-            </div>
-            <div class="info-extra">
-                <div class="item"><span class="icono">📐</span><span>142.09 m²</span></div>
-                <div class="item"><span class="icono">🏗️</span><span>125.50 m²</span></div>
-                <div class="item"><span class="icono">🛏️</span><span>4</span></div>
-                <div class="item"><span class="icono">🚿</span><span>2</span></div>
-                <div class="item"><span class="icono">🚗</span><span>2</span></div>
-                <div class="item"><span class="icono">🏢</span><span>2</span></div>
-            </div>
-        </a>
+                <!-- Precio Mínimo -->
+                <div class="filtro-group">
+                    <label>Precio mínimo (MXN)</label>
+                    <input type="text" id="precio-min" placeholder="$0" autocomplete="off">
+                </div>
 
-        <!-- PROPIEDAD 3: DEPARTAMENTO CENTRICO (EJEMPLO) -->
-        <a href="V180126-(2).html" class="card">
-            <img src="Maru/Terreno/wa 20260118_125836.jpg" alt="Departamento Céntrico">
-            <div class="descripcion">
-                <h3>Terreno</h3>
-                <h3>San Felipe Tlalmimilolpan</h3>
-                <span class="precio">$1,400,000</span>
-            </div>
-            <div class="info-extra">
-                <div class="item"><span class="icono">📐</span><span>250 m²</span></div>
-            </div>
-        </a>
-    </section>
+                <!-- Precio Máximo -->
+                <div class="filtro-group">
+                    <label>Precio máximo (MXN)</label>
+                    <input type="text" id="precio-max" placeholder="$0" autocomplete="off">
+                </div>
 
-    <script src="script.js"></script>
-</body>
+                <!-- Habitaciones (1,2,3...) -->
+                <div class="filtro-group">
+                    <label>Habitaciones</label>
+                    <select id="habitaciones">
+                        <option value="">Cualquiera</option>
+                    </select>
+                </div>
+
+                <!-- Construcción (mín/máx en m²) -->
+                <div class="filtro-group">
+                    <label>Construcción (m²)</label>
+                    <div class="rango-dual">
+                        <input type="text" id="construccion-min" placeholder="mín" autocomplete="off">
+                        <span>-</span>
+                        <input type="text" id="construccion-max" placeholder="máx" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Niveles / Pisos -->
+                <div class="filtro-group">
+                    <label>Niveles / Pisos</label>
+                    <select id="niveles">
+                        <option value="">Cualquiera</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <!-- ========== FIN FILTROS ========== -->
+
+        <section class="grid-propiedades">
+            <!-- PROPIEDAD 1: BODEGA EN REMATE -->
+            <a href="V011410.html" class="card" data-tipo="bodega">
+                <img src="Terreno Comercial San Mateo Atenco/watermarked San Mateo 2.jpg" alt="Bodega en Remate">
+                <div class="descripcion">
+                    <h3>Bodega (Remate)</h3>
+                    <h3>San Mateo Atenco</h3>
+                    <span class="precio">$8,500,000</span>
+                </div>
+                <div class="info-extra">
+                    <div class="item"><span class="icono">📐</span><span>1,114 m²</span></div>
+                    <div class="item"><span class="icono">🏗️</span><span>214 m²</span></div>
+                    <div class="item"><span class="icono">🛏️</span><span>3</span></div>
+                    <div class="item"><span class="icono">🚿</span><span>3</span></div>
+                    <div class="item"><span class="icono">🚗</span><span>1</span></div>
+                    <div class="item"><span class="icono">🏢</span><span>2</span></div>
+                </div>
+            </a>
+
+            <!-- PROPIEDAD 2: Casa Maru -->
+            <a href="V180126.html" class="card" data-tipo="casa">
+                <img src="Maru/Casa/wa 20260301_132506.jpg" alt="Casa Moderna">
+                <div class="descripcion">
+                    <h3>Casa 2 pisos</h3>
+                    <h3>San Felipe Tlalmimilolpan</h3>
+                    <span class="precio">$1,600,000</span>
+                </div>
+                <div class="info-extra">
+                    <div class="item"><span class="icono">📐</span><span>142.09 m²</span></div>
+                    <div class="item"><span class="icono">🏗️</span><span>125.50 m²</span></div>
+                    <div class="item"><span class="icono">🛏️</span><span>4</span></div>
+                    <div class="item"><span class="icono">🚿</span><span>2</span></div>
+                    <div class="item"><span class="icono">🚗</span><span>2</span></div>
+                    <div class="item"><span class="icono">🏢</span><span>2</span></div>
+                </div>
+            </a>
+
+            <!-- PROPIEDAD 3: Terreno -->
+            <a href="V180126-(2).html" class="card" data-tipo="terreno">
+                <img src="Maru/Terreno/wa 20260118_125836.jpg" alt="Terreno">
+                <div class="descripcion">
+                    <h3>Terreno</h3>
+                    <h3>San Felipe Tlalmimilolpan</h3>
+                    <span class="precio">$1,400,000</span>
+                </div>
+                <div class="info-extra">
+                    <div class="item"><span class="icono">📐</span><span>250 m²</span></div>
+                </div>
+            </a>
+        </section>
+
+        <script src="script.js"></script>
+    </body>
 </html>

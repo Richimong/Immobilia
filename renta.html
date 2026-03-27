@@ -1,44 +1,138 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Propiedades en Renta - Immobilia</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Propiedades en Renta - Immobilia</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="Logos/Marca de Agua 3.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Logos/Marca de Agua 3.png">
-    <link rel="shortcut icon" href="Logos/Marca de Agua 3.png">
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="Logos/Marca de Agua 3.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="Logos/Marca de Agua 3.png">
+        <link rel="shortcut icon" href="Logos/Marca de Agua 3.png">
 
-<body>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
 
-    <header class="header">
-        <div class="logo">
-            <a href="index.html">
-                <img src="Logos/Marca de Agua 3.png" alt="Logo">
-            </a>
+    <body>
+
+        <header class="header">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="Logos/Marca de Agua 3.png" alt="Logo">
+                </a>
+            </div>
+            <div class="nombre">
+                <h1>Immobilia</h1>
+            </div>
+            <nav class="menu">
+                <a href="venta.html" class="btn">Compra</a>
+                <a href="renta.html" class="btn">Renta</a>
+                <a href="contacto.html" class="btn">Contacto</a>
+            </nav>
+        </header>
+
+        <!-- ========== FILTROS ========== -->
+        <div class="filtros-container">
+            <div class="filtros-header">
+                <h3>Filtrar propiedades</h3>
+                <button id="btn-limpiar" class="btn-limpiar">Limpiar filtros</button>
+            </div>
+            <div class="filtros-grid">
+                
+                <!-- Tipo de Propiedad (orden alfabético) -->
+                <div class="filtro-group">
+                    <label>Tipo de Propiedad</label>
+                    <select id="tipo-propiedad">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+
+                <!-- Precio Mínimo -->
+                <div class="filtro-group">
+                    <label>Precio mínimo (MXN)</label>
+                    <input type="text" id="precio-min" placeholder="$0" autocomplete="off">
+                </div>
+
+                <!-- Precio Máximo -->
+                <div class="filtro-group">
+                    <label>Precio máximo (MXN)</label>
+                    <input type="text" id="precio-max" placeholder="$0" autocomplete="off">
+                </div>
+
+                <!-- Habitaciones (1,2,3...) -->
+                <div class="filtro-group">
+                    <label>Habitaciones</label>
+                    <select id="habitaciones">
+                        <option value="">Cualquiera</option>
+                    </select>
+                </div>
+
+                <!-- Construcción (mín/máx en m²) -->
+                <div class="filtro-group">
+                    <label>Construcción (m²)</label>
+                    <div class="rango-dual">
+                        <input type="text" id="construccion-min" placeholder="mín" autocomplete="off">
+                        <span>-</span>
+                        <input type="text" id="construccion-max" placeholder="máx" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Niveles / Pisos -->
+                <div class="filtro-group">
+                    <label>Niveles / Pisos</label>
+                    <select id="niveles">
+                        <option value="">Cualquiera</option>
+                    </select>
+                </div>
+
+            </div>
         </div>
-        <div class="nombre">
-            <h1>Immobilia</h1>
-        </div>
-        <nav class="menu">
-            <a href="venta.html" class="btn">Compra</a>
-            <a href="renta.html" class="btn">Renta</a>
-            <a href="contacto.html" class="btn">Contacto</a>
-        </nav>
-    </header>
+        <!-- ========== FIN FILTROS ========== -->
 
-    <section class="grid-propiedades">
-        <!-- PROPIEDAD 1: DEPARTAMENTO EN RENTA -->
+        <!-- Contenedor de propiedades (vacío por ahora) -->
+        <section class="grid-propiedades" id="grid-propiedades">
+            <!-- Aquí se mostrarán las propiedades en renta cuando las haya -->
+        </section>
+
+        <script src="script.js"></script>
         
-
-        <!-- PROPIEDAD 2: CASA EN RENTA -->
-        
-    </section>
-
-    <script src="script.js"></script>
-</body>
+        <!-- Script específico para renta (muestra mensaje cuando no hay propiedades) -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const tarjetas = document.querySelectorAll('.grid-propiedades .card');
+                
+                if (tarjetas.length === 0) {
+                    // Deshabilitar filtros
+                    const inputs = document.querySelectorAll('.filtro-group input, .filtro-group select');
+                    inputs.forEach(input => {
+                        input.disabled = true;
+                        input.style.backgroundColor = '#f5f5f5';
+                        input.style.cursor = 'not-allowed';
+                    });
+                    
+                    // Mostrar mensaje amigable en el área de propiedades
+                    const grid = document.getElementById('grid-propiedades');
+                    const mensajeNoPropiedades = document.createElement('div');
+                    mensajeNoPropiedades.id = 'sin-propiedades';
+                    mensajeNoPropiedades.style.cssText = `
+                        text-align: center;
+                        padding: 60px 20px;
+                        background: white;
+                        border-radius: 10px;
+                        margin: 20px 40px;
+                        color: #666;
+                    `;
+                    mensajeNoPropiedades.innerHTML = `
+                        <i class="fas fa-home" style="font-size: 48px; color: #caa45f; margin-bottom: 20px; display: block;"></i>
+                        <h3 style="color: #1f2c3a; margin-bottom: 10px;">Próximamente</h3>
+                        <p>Actualmente no tenemos propiedades disponibles en renta.</p>
+                        <p style="margin-top: 10px;">¡Regresa pronto para conocer nuestras nuevas opciones!</p>
+                        <a href="venta.html" class="btn" style="display: inline-block; margin-top: 20px;">Ver propiedades en venta</a>
+                    `;
+                    grid.parentNode.insertBefore(mensajeNoPropiedades, grid.nextSibling);
+                    grid.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
 </html>

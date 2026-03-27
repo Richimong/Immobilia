@@ -239,3 +239,300 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ========== FUNCIONES DE FORMATO ==========
+function formatearPrecio(valor) {
+    if (!valor) return '';
+    let numero = valor.toString().replace(/[^0-9]/g, '');
+    if (numero === '') return '';
+    return '$' + parseInt(numero, 10).toLocaleString('es-MX');
+}
+
+function formatearMetros(valor) {
+    if (!valor) return '';
+    let numero = valor.toString().replace(/[^0-9]/g, '');
+    if (numero === '') return '';
+    return parseInt(numero, 10).toLocaleString('es-MX') + ' m²';
+}
+
+function parseNumeroFormateado(valor) {
+    if (!valor) return 0;
+    return parseFloat(valor.toString().replace(/[^0-9]/g, '')) || 0;
+}
+
+// Aplicar formato a los campos de precio al perder foco
+function aplicarFormatoPrecio(input) {
+    if (!input) return;
+    const valorNumerico = parseNumeroFormateado(input.value);
+    if (valorNumerico > 0) {
+        input.value = formatearPrecio(valorNumerico);
+    } else {
+        input.value = '';
+    }
+    filtrarPropiedades(); // Filtro automático
+}
+
+function aplicarFormatoMetros(input) {
+    if (!input) return;
+    const valorNumerico = parseNumeroFormateado(input.value);
+    if (valorNumerico > 0) {
+        input.value = valorNumerico.toLocaleString('es-MX') + ' m²';
+    } else {
+        input.value = '';
+    }
+    filtrarPropiedades(); // Filtro automático
+}
+
+// ========== OBTENER VALORES ÚNICOS DE LAS TARJETAS ==========
+function obtenerValoresUnicos(selectorIcono) {
+    const valores = new Set();
+    const tarjetas = document.querySelectorAll('.grid-propiedades .card');
+    
+    tarjetas.forEach(tarjeta => {
+        const items = tarjeta.querySelectorAll('.item');
+        const item = Array.from(items).find(item => 
+            item.querySelector('.icono')?.textContent === selectorIcono
+        );
+        if (item) {
+            const span = item.querySelector('span:last-child');
+            if (span) {
+                const valor = parseInt(span.textContent) || 0;
+                if (valor > 0) valores.add(valor);
+            }
+        }
+    });
+    
+    return Array.from(valores).sort((a, b) => a - b);
+}
+
+function obtenerTiposUnicos() {
+    const tipos = new Set();
+    const tarjetas = document.querySelectorAll('.grid-propiedades .card');
+    tarjetas.forEach(tarjeta => {
+        const tipo = tarjeta.getAttribute('data-tipo');
+        if (tipo) tipos.add(tipo);
+    });
+    return Array.from(tipos).sort();
+}
+
+// ========== ACTUALIZAR SELECTORES DINÁMICOS ==========
+function actualizarSelectores() {
+    // Actualizar tipos de propiedad
+    const tipos = obtenerTiposUnicos();
+    const selectTipo = document.getElementById('tipo-propiedad');
+    if (selectTipo) {
+        const valorActual = selectTipo.value;
+        selectTipo.innerHTML = '<option value="">Todos</option>';
+        tipos.forEach(tipo => {
+            const option = document.createElement('option');
+            option.value = tipo;
+            // Capitalizar primera letra
+            option.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+            selectTipo.appendChild(option);
+        });
+        if (valorActual) selectTipo.value = valorActual;
+    }
+    
+    // Actualizar habitaciones
+    const habitacionesValores = obtenerValoresUnicos('🛏️');
+    const selectHabs = document.getElementById('habitaciones');
+    if (selectHabs) {
+        const valorActual = selectHabs.value;
+        selectHabs.innerHTML = '<option value="">Cualquiera</option>';
+        habitacionesValores.forEach(val => {
+            const option = document.createElement('option');
+            option.value = val;
+            option.textContent = val + (val === 1 ? ' habitación' : ' habitaciones');
+            selectHabs.appendChild(option);
+        });
+        if (valorActual) selectHabs.value = valorActual;
+    }
+    
+    // Actualizar niveles
+    const nivelesValores = obtenerValoresUnicos('🏢');
+    const selectNiveles = document.getElementById('niveles');
+    if (selectNiveles) {
+        const valorActual = selectNiveles.value;
+        selectNiveles.innerHTML = '<option value="">Cualquiera</option>';
+        nivelesValores.forEach(val => {
+            const option = document.createElement('option');
+            option.value = val;
+            option.textContent = val + (val === 1 ? ' nivel' : ' niveles');
+            selectNiveles.appendChild(option);
+        });
+        if (valorActual) selectNiveles.value = valorActual;
+    }
+}
+
+// ========== FUNCIÓN PRINCIPAL DE FILTRADO ==========
+function filtrarPropiedades() {
+    // Obtener valores de los filtros
+    const tipoSeleccionado = document.getElementById('tipo-propiedad')?.value || '';
+    
+    const precioMin = parseNumeroFormateado(document.getElementById('precio-min')?.value);
+    const precioMax = parseNumeroFormateado(document.getElementById('precio-max')?.value) || Infinity;
+    
+    const habsRequeridas = parseInt(document.getElementById('habitaciones')?.value) || 0;
+    const nivelesRequeridos = parseInt(document.getElementById('niveles')?.value) || 0;
+    
+    const construccionMin = parseNumeroFormateado(document.getElementById('construccion-min')?.value);
+    const construccionMax = parseNumeroFormateado(document.getElementById('construccion-max')?.value) || Infinity;
+    
+    const tarjetas = document.querySelectorAll('.grid-propiedades .card');
+    let contadorVisibles = 0;
+    
+    tarjetas.forEach(tarjeta => {
+        let mostrar = true;
+        
+        // Filtrar por tipo
+        const tipoPropiedad = tarjeta.getAttribute('data-tipo') || '';
+        if (tipoSeleccionado && tipoPropiedad !== tipoSeleccionado) mostrar = false;
+        
+        // Filtrar por precio
+        const precioElemento = tarjeta.querySelector('.precio');
+        let precio = 0;
+        if (precioElemento) {
+            precio = parseNumeroFormateado(precioElemento.textContent);
+        }
+        if (precio < precioMin || precio > precioMax) mostrar = false;
+        
+        // Filtrar por habitaciones
+        let habitaciones = 0;
+        const habsItem = Array.from(tarjeta.querySelectorAll('.item')).find(item => 
+            item.querySelector('.icono')?.textContent === '🛏️'
+        );
+        if (habsItem) {
+            const habsSpan = habsItem.querySelector('span:last-child');
+            if (habsSpan) habitaciones = parseInt(habsSpan.textContent) || 0;
+        }
+        if (habsRequeridas > 0 && habitaciones !== habsRequeridas) mostrar = false;
+        
+        // Filtrar por construcción (ícono 🏗️)
+        let construccion = 0;
+        const construccionItem = Array.from(tarjeta.querySelectorAll('.item')).find(item => 
+            item.querySelector('.icono')?.textContent === '🏗️'
+        );
+        if (construccionItem) {
+            const constSpan = construccionItem.querySelector('span:last-child');
+            if (constSpan) construccion = parseNumeroFormateado(constSpan.textContent);
+        }
+        if (construccion < construccionMin || construccion > construccionMax) mostrar = false;
+        
+        // Filtrar por niveles (ícono 🏢)
+        let niveles = 0;
+        const nivelesItem = Array.from(tarjeta.querySelectorAll('.item')).find(item => 
+            item.querySelector('.icono')?.textContent === '🏢'
+        );
+        if (nivelesItem) {
+            const nivSpan = nivelesItem.querySelector('span:last-child');
+            if (nivSpan) niveles = parseInt(nivSpan.textContent) || 0;
+        }
+        if (nivelesRequeridos > 0 && niveles !== nivelesRequeridos) mostrar = false;
+        
+        // Mostrar u ocultar
+        tarjeta.style.display = mostrar ? 'block' : 'none';
+        if (mostrar) contadorVisibles++;
+    });
+    
+    // Mostrar mensaje si no hay resultados
+    const grid = document.querySelector('.grid-propiedades');
+    let mensajeNoResultados = document.getElementById('sin-resultados');
+    
+    if (contadorVisibles === 0) {
+        if (!mensajeNoResultados) {
+            mensajeNoResultados = document.createElement('div');
+            mensajeNoResultados.id = 'sin-resultados';
+            mensajeNoResultados.innerHTML = '<p>🔍 No hay propiedades que coincidan con los filtros seleccionados.</p>';
+            grid.parentNode.insertBefore(mensajeNoResultados, grid.nextSibling);
+        }
+        mensajeNoResultados.style.display = 'block';
+    } else {
+        if (mensajeNoResultados) mensajeNoResultados.style.display = 'none';
+    }
+}
+
+// ========== LIMPIAR FILTROS ==========
+function limpiarFiltros() {
+    const precioMin = document.getElementById('precio-min');
+    const precioMax = document.getElementById('precio-max');
+    const habitaciones = document.getElementById('habitaciones');
+    const tipoPropiedad = document.getElementById('tipo-propiedad');
+    const construccionMin = document.getElementById('construccion-min');
+    const construccionMax = document.getElementById('construccion-max');
+    const niveles = document.getElementById('niveles');
+    
+    if (precioMin) precioMin.value = '';
+    if (precioMax) precioMax.value = '';
+    if (habitaciones) habitaciones.value = '';
+    if (tipoPropiedad) tipoPropiedad.value = '';
+    if (construccionMin) construccionMin.value = '';
+    if (construccionMax) construccionMax.value = '';
+    if (niveles) niveles.value = '';
+    
+    const tarjetas = document.querySelectorAll('.grid-propiedades .card');
+    tarjetas.forEach(tarjeta => tarjeta.style.display = 'block');
+    
+    const mensajeNoResultados = document.getElementById('sin-resultados');
+    if (mensajeNoResultados) mensajeNoResultados.style.display = 'none';
+}
+
+// ========== INICIALIZAR EVENTOS ==========
+function inicializarFiltros() {
+    // Actualizar selectores dinámicos
+    actualizarSelectores();
+    
+    // Asignar eventos de entrada automática
+    const precioMinInput = document.getElementById('precio-min');
+    const precioMaxInput = document.getElementById('precio-max');
+    const construccionMinInput = document.getElementById('construccion-min');
+    const construccionMaxInput = document.getElementById('construccion-max');
+    const habitacionesSelect = document.getElementById('habitaciones');
+    const tipoSelect = document.getElementById('tipo-propiedad');
+    const nivelesSelect = document.getElementById('niveles');
+    
+    if (precioMinInput) {
+        precioMinInput.addEventListener('blur', () => aplicarFormatoPrecio(precioMinInput));
+        precioMinInput.addEventListener('input', () => {
+            // Mientras escribe, solo números
+            precioMinInput.value = precioMinInput.value.replace(/[^0-9]/g, '');
+        });
+        precioMinInput.addEventListener('keyup', filtrarPropiedades);
+    }
+    
+    if (precioMaxInput) {
+        precioMaxInput.addEventListener('blur', () => aplicarFormatoPrecio(precioMaxInput));
+        precioMaxInput.addEventListener('input', () => {
+            precioMaxInput.value = precioMaxInput.value.replace(/[^0-9]/g, '');
+        });
+        precioMaxInput.addEventListener('keyup', filtrarPropiedades);
+    }
+    
+    if (construccionMinInput) {
+        construccionMinInput.addEventListener('blur', () => aplicarFormatoMetros(construccionMinInput));
+        construccionMinInput.addEventListener('input', () => {
+            construccionMinInput.value = construccionMinInput.value.replace(/[^0-9]/g, '');
+        });
+        construccionMinInput.addEventListener('keyup', filtrarPropiedades);
+    }
+    
+    if (construccionMaxInput) {
+        construccionMaxInput.addEventListener('blur', () => aplicarFormatoMetros(construccionMaxInput));
+        construccionMaxInput.addEventListener('input', () => {
+            construccionMaxInput.value = construccionMaxInput.value.replace(/[^0-9]/g, '');
+        });
+        construccionMaxInput.addEventListener('keyup', filtrarPropiedades);
+    }
+    
+    if (habitacionesSelect) habitacionesSelect.addEventListener('change', filtrarPropiedades);
+    if (tipoSelect) tipoSelect.addEventListener('change', filtrarPropiedades);
+    if (nivelesSelect) nivelesSelect.addEventListener('change', filtrarPropiedades);
+    
+    const btnLimpiar = document.getElementById('btn-limpiar');
+    if (btnLimpiar) btnLimpiar.addEventListener('click', limpiarFiltros);
+}
+
+// Ejecutar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarFiltros();
+    filtrarPropiedades(); // Filtro inicial
+});
